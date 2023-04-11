@@ -11,8 +11,8 @@
 3. Настройте данный файл согласно схеме подключения всетодиодов. Подробнее об этом описано [здесь](#tutorial "Настройка портов").
 Если светодиод D3 подключен к выводу PC13 укажите следующее:
 	```c
-	#define MFMC_IO_LEDS_D3_PORT	GPIOС
-	#define MFMC_IO_LEDS_D3_PIN		GPIO_Pin_13
+	#define MFMC_IO_LEDS_D3_PORT		GPIOС
+	#define MFMC_IO_LEDS_D3_PIN			GPIO_Pin_13
 	```
 4. Переопределите функцию uint32_t MFMC_IO_LEDS_GetMs() она должна возвращать время 	пройдено с момента запуска МК.
 
@@ -23,28 +23,36 @@
 
 ### ПРИМЕР:
 ```c
+/* Подключаем библиотеку. */
 #include "mfmc_io_leds.h"
 
 int main()
 {
+	/* Настройка тактирования. */
 	RCC_Init();
+
+	/* Инициализация портов светодиодов GPIO. */
 	MFMC_IO_LEDS_Init();
 
 	while (1)
 	{
+		/* Контроль мигания светодиодов. */
 		MFMC_IO_LEDS_Control();
 
 		if(error)
 		{
-			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D6, MFMC_IO_LEDS_MODE_FOUR_BLINK);
+			/* Непрерывное мигание. */
+			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D3, MFMC_IO_LEDS_MODE_FOUR_BLINK);
 		}
 		else if(on)
 		{
-			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D6, MFMC_IO_LEDS_MODE_ON);
+			/* Всегда включен. */
+			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D3, MFMC_IO_LEDS_MODE_ON);
 		}
 		else
 		{
-			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D6, MFMC_IO_LEDS_MODE_OFF);
+			/* Всегда выключен. */
+			MFMC_IO_LEDS_SetMode(MFMC_IO_LEDS_D3, MFMC_IO_LEDS_MODE_OFF);
 		}
 	}
 }
@@ -52,7 +60,7 @@ int main()
 
 ## <p id="tutorial">НАСТНОЙКА ПОРТОВ</p>
 
-Для настройки портов отредактируйте файл `mfmc_io_leds.h` для каждого светодиода укажите порт к которому он подключен в макросе  `MFMC_IO_LEDS_x_PORT` и номер вывода порта в макросе `MFMC_IO_LEDS_x_PIN`, где x - `D1..8`, `ERROR` или `RUN`.
+Для настройки портов отредактируйте файл `mfmc_io_leds_conf.h`. Для каждого светодиода укажите порт к которому он подключен в макросе  `MFMC_IO_LEDS_x_PORT` и номер вывода порта в макросе `MFMC_IO_LEDS_x_PIN`, где x - `D1..8`, `ERROR` или `RUN`.
 
 Если светодиод не использкется, установите в маеросе `MFMC_IO_LEDS_х_PORT` значе 0, в  таком случае значение макроса `MFMC_IO_LEDS_x_PIN` не имеет значения.
 
