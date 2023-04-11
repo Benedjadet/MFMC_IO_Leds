@@ -11,8 +11,8 @@
 3. Настройте данный файл согласно схеме подключения всетодиодов. Подробнее об этом описано [здесь](#tutorial "Настройка портов").
 Если светодиод D3 подключен к выводу PC13 укажите следующее:
 	```c
-	#define MFMC_IO_LEDS_D3_PORT		GPIOС
-	#define MFMC_IO_LEDS_D3_PIN			GPIO_Pin_13
+	#define MFMC_IO_LEDS_D3_PORT    GPIOС
+	#define MFMC_IO_LEDS_D3_PIN     GPIO_Pin_13
 	```
 4. Переопределите функцию uint32_t MFMC_IO_LEDS_GetMs() она должна возвращать время 	пройдено с момента запуска МК.
 
